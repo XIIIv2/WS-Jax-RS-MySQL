@@ -49,6 +49,11 @@ public class HibernateUtil {
             props.put(Environment.JAKARTA_JDBC_USER, props.getProperty("dbUser"));
             props.put(Environment.JAKARTA_JDBC_PASSWORD, props.getProperty("dbPass"));
             props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+            props.put("hibernate.hikari.minimumIdle", props.getProperty("minimumIdle"));
+            props.put("hibernate.hikari.maximumPoolSize", props.getProperty("maximumPoolSize"));
+            props.put("hibernate.hikari.idleTimeout", props.getProperty("idleTimeout"));
+            props.put("hibernate.hikari.connectionTimeout", props.getProperty("connectionTimeout"));
+            props.put("hibernate.connection.provider_class", props.getProperty("connectionProviderClass"));
             configuration.setProperties(props);
             return configuration;
         } catch (IOException e) {
