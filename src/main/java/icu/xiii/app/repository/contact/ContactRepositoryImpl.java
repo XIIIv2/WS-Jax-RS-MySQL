@@ -65,7 +65,6 @@ public class ContactRepositoryImpl implements ContactRepository {
             session.merge(contact);
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
