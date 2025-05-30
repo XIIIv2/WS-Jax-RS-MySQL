@@ -1,0 +1,47 @@
+REST API Contact
+---------------------
+
+(1) Створення даних
+
+POST
+http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts
+
+{
+    "name": "Tom",
+    "phone": "555 123-456-789"
+}
+
+{
+    "name": "Bob",
+    "phone": "555 456-123-789"
+}
+
+{
+    "name": "Lucy",
+    "phone": "555 789-123-456"
+}
+
+(2) Отримання всіх даних
+
+GET
+http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts
+
+(3) Отримання даних за id
+
+GET
+http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts/3
+
+(4) Оновлення даних
+
+PUT
+http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts/2
+
+{
+    "name": "Bob",
+    "phone": "555 987-654-321"
+}
+
+(5) Видалення даних
+
+DELETE
+http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts/1

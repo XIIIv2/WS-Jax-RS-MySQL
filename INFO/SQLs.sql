@@ -1,0 +1,8 @@
+CREATE SCHEMA IF NOT EXISTS `ws_rs_contacts`
+DEFAULT CHARACTER SET utf8;
+
+CREATE TABLE IF NOT EXISTS `ws_rs_contacts`.`contacts` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(32) NOT NULL,
+  PRIMARY KEY (`id`));
