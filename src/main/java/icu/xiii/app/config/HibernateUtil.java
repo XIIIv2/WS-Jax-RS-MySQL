@@ -1,6 +1,7 @@
 package icu.xiii.app.config;
 
 import icu.xiii.app.entity.Contact;
+import icu.xiii.app.entity.ContactField;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -25,6 +26,7 @@ public class HibernateUtil {
                 Configuration configuration = getConfiguration();
 
                 configuration.addAnnotatedClass(Contact.class);
+                configuration.addAnnotatedClass(ContactField.class);
 
                 ServiceRegistry serviceRegistry =
                         new StandardServiceRegistryBuilder()

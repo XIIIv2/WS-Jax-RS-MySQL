@@ -1,14 +1,14 @@
 package icu.xiii.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import icu.xiii.app.dto.contact.ContactDtoRequest;
-import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Collections;
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "contacts")
@@ -25,14 +25,27 @@ public class Contact {
     @Column(name = "phone")
     private String phone;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "contact", orphanRemoval = true)
+    @JsonManagedReference
+    @JsonProperty("fields")
+    private Set<ContactField> contactFields = new HashSet<>();
+
     public Contact() {
 
     }
 
     public Contact(ContactDtoRequest request) {
-        this.id = request.id();
-        this.name = request.name();
-        this.phone = request.phone();
+        setId(request.id());
+        setName(request.name());
+        setPhone(request.phone());
+        setContactFields(request.fields());
+    }
+
+    public Contact(Long id, ContactDtoRequest request) {
+        setId(id);
+        setName(request.name());
+        setPhone(request.phone());
+        this.setContactFields(request.fields());
     }
 
     public Long getId() {
@@ -59,6 +72,27 @@ public class Contact {
         this.phone = phone;
     }
 
+    public Set<ContactField> getContactFields() {
+        return Collections.unmodifiableSet(this.contactFields);
+    }
+
+    public void setContactFields(Set<ContactField> contactFields) {
+        contactFields.forEach(c -> {
+            c.setContact(this);
+        });
+        this.contactFields = contactFields;
+    }
+
+    public void addContactField(ContactField field) {
+        field.setContact(this);
+        this.contactFields.add(field);
+    }
+
+    public void removeContactField(ContactField field) {
+        field.setContact(null);
+        this.contactFields.remove(field);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -81,6 +115,7 @@ public class Contact {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
+                ", contactFields=" + contactFields +
                 '}';
     }
 }

@@ -8,17 +8,44 @@ http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts
 
 {
     "name": "Tom",
-    "phone": "555 123-456-789"
+    "phone": "555 123-456-789",
+    "fields": [{
+        "name": "icq",
+        "value": "123456"
+    },{
+        "name": "skype",
+        "value": "skypeAccount"
+    },{
+        "name": "email",
+        "value": "tom@mail.com"
+    }]
+}
+
+{
+    "name": "Kirill Popov",
+    "phone": "+380 93 3697739",
+    "fields": [{
+        "name": "email",
+         "value": "wangoviridans@gmail.com"
+    }, {
+        "name": "email",
+        "value": "kirill.popov@me.com"
+    }, {
+        "name": "telegram",
+         "value": "@https://t.me/K_XIII_P"
+    }]
 }
 
 {
     "name": "Bob",
-    "phone": "555 456-123-789"
+    "phone": "555 456-123-789",
+    "fields": []
 }
 
 {
     "name": "Lucy",
-    "phone": "555 789-123-456"
+    "phone": "555 789-123-456",
+    "fields": []
 }
 
 (2) Отримання всіх даних
@@ -29,19 +56,35 @@ http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts
 (3) Отримання даних за id
 
 GET
-http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts/3
+http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts/2
 
 (4) Оновлення даних
 
 PUT
-http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts/2
+http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts/1
+
+{
+    "name": "Tom",
+    "phone": "555 123-456-789",
+    "fields": [{
+        "name": "email",
+        "value": "tom@mail.com"
+    }]
+}
+
+PUT
+http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts/3
 
 {
     "name": "Bob",
-    "phone": "555 987-654-321"
+    "phone": "555 987-654-321",
+    "fields": [{
+        "name": "email",
+        "value": "bob@mail.com"
+    }]
 }
 
 (5) Видалення даних
 
 DELETE
-http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts/1
+http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts/4

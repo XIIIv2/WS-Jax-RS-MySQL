@@ -61,9 +61,7 @@ public class ContactRepositoryImpl implements ContactRepository {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Contact contact = new Contact(request);
-            contact.setId(id);
-            //session.persist(contact);
+            Contact contact = new Contact(id, request);
             session.merge(contact);
             transaction.commit();
         } catch (Exception e) {
