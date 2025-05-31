@@ -38,14 +38,12 @@ http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts
 
 {
     "name": "Bob",
-    "phone": "555 456-123-789",
-    "fields": []
+    "phone": "555 456-123-789"
 }
 
 {
     "name": "Lucy",
-    "phone": "555 789-123-456",
-    "fields": []
+    "phone": "555 789-123-456"
 }
 
 (2) Отримання всіх даних

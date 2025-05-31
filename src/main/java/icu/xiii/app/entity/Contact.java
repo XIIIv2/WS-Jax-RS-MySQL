@@ -1,7 +1,9 @@
 package icu.xiii.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import icu.xiii.app.dto.contact.ContactDtoRequest;
 import jakarta.persistence.*;
 
@@ -12,6 +14,7 @@ import java.util.HashSet;
 
 @Entity
 @Table(name = "contacts")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Contact {
 
     @Id
@@ -28,7 +31,7 @@ public class Contact {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "contact", orphanRemoval = true)
     @JsonManagedReference
     @JsonProperty("fields")
-    private Set<ContactField> contactFields = new HashSet<>();
+    private final Set<ContactField> contactFields = new HashSet<>();
 
     public Contact() {
 
@@ -76,11 +79,12 @@ public class Contact {
         return Collections.unmodifiableSet(this.contactFields);
     }
 
+    @JsonSetter("fields")
     public void setContactFields(Set<ContactField> contactFields) {
-        contactFields.forEach(c -> {
-            c.setContact(this);
-        });
-        this.contactFields = contactFields;
+        if (contactFields == null) {
+            return;
+        }
+        contactFields.forEach(this::addContactField);
     }
 
     public void addContactField(ContactField field) {
