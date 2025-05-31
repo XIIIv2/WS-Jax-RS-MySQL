@@ -1,12 +1,12 @@
 package icu.xiii.app.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.*;
 import icu.xiii.app.dto.contact.ContactDtoRequest;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.Instant;
 import java.util.Objects;
 import java.util.Collections;
 import java.util.Set;
@@ -19,36 +19,50 @@ public class Contact {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     private String phone;
+
+    @CreationTimestamp
+    @Column(name = "created_on", updatable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Kiev")
+    private Instant createdOn;
+
+    @UpdateTimestamp
+    @Column(name = "updated_on", updatable = true)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Kiev")
+    private Instant updatedOn;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "contact", orphanRemoval = true)
     @JsonManagedReference
-    @JsonProperty("fields")
-    private final Set<ContactField> contactFields = new HashSet<>();
+    @JsonProperty("extra")
+    private final Set<ExtraField> extraFields = new HashSet<>();
 
     public Contact() {
 
     }
 
     public Contact(ContactDtoRequest request) {
+        this();
         setId(request.id());
         setName(request.name());
         setPhone(request.phone());
-        setContactFields(request.fields());
+        setExtraFields(request.extra());
     }
 
     public Contact(Long id, ContactDtoRequest request) {
+        this();
         setId(id);
         setName(request.name());
         setPhone(request.phone());
-        this.setContactFields(request.fields());
+        this.setExtraFields(request.extra() );
     }
 
     public Long getId() {
@@ -75,26 +89,41 @@ public class Contact {
         this.phone = phone;
     }
 
-    public Set<ContactField> getContactFields() {
-        return Collections.unmodifiableSet(this.contactFields);
+    public Instant getCreatedOn() {
+        return createdOn;
     }
 
-    @JsonSetter("fields")
-    public void setContactFields(Set<ContactField> contactFields) {
-        if (contactFields == null) {
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Instant getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(Instant updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    public Set<ExtraField> getExtraFields() {
+        return Collections.unmodifiableSet(this.extraFields);
+    }
+
+    @JsonSetter("extra")
+    public void setExtraFields(Set<ExtraField> extraFields) {
+        if (extraFields == null) {
             return;
         }
-        contactFields.forEach(this::addContactField);
+        extraFields.forEach(this::addExtraField);
     }
 
-    public void addContactField(ContactField field) {
+    public void addExtraField(ExtraField field) {
         field.setContact(this);
-        this.contactFields.add(field);
+        this.extraFields.add(field);
     }
 
-    public void removeContactField(ContactField field) {
-        field.setContact(null);
-        this.contactFields.remove(field);
+    public void removeExtraField(ExtraField field) {
+        this.extraFields.remove(field);
     }
 
     @Override
@@ -119,7 +148,7 @@ public class Contact {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
-                ", contactFields=" + contactFields +
+                ", extraFields=" + extraFields +
                 '}';
     }
 }

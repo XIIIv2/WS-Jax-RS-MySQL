@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "contact_fields")
-public class ContactField {
+@Table(name = "extra_fields")
+public class ExtraField {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,23 +20,23 @@ public class ContactField {
     @JsonBackReference
     private Contact contact;
 
-    @Column(name = "field_name")
+    @Column(name = "field_name", nullable = false)
     private String name;
 
-    @Column(name = "field_value")
+    @Column(name = "field_value", nullable = false)
     private String value;
 
-    public ContactField() {
+    public ExtraField() {
 
     }
 
-    public ContactField(Long id, String name, String value) {
+    public ExtraField(Long id, String name, String value) {
         this.id = id;
         this.name = name;
         this.value = value;
     }
 
-    public ContactField(String name, String value) {
+    public ExtraField(String name, String value) {
         this.name = name;
         this.value = value;
     }
@@ -76,7 +76,7 @@ public class ContactField {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        ContactField that = (ContactField) o;
+        ExtraField that = (ExtraField) o;
         return Objects.equals(id, that.id) && name.equals(that.name) && value.equals(that.value);
     }
 
@@ -90,7 +90,7 @@ public class ContactField {
 
     @Override
     public String toString() {
-        return "ContactField{" +
+        return "ExtraField{" +
                 "id='" + id + "'" +
                 ", value='" + value + '\'' +
                 ", name='" + name + '\'' +
