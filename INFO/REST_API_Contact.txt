@@ -32,7 +32,7 @@ http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts
         "value": "kirill.popov@me.com"
     }, {
         "name": "telegram",
-         "value": "@https://t.me/K_XIII_P"
+         "value": "https://t.me/K_XIII_P"
     }]
 }
 
