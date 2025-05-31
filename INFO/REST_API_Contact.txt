@@ -29,7 +29,10 @@ http://localhost:8080/WS-Jax-RS-MySQL-1.0/api/v1/contacts
          "value": "wangoviridans@gmail.com"
     }, {
         "name": "email",
-        "value": "kirill.popov@me.com"
+        "value": "kirill.popov@me.com",
+    }, {
+        "name": "email",
+        "value": "admin@xiii.icu",
     }, {
         "name": "telegram",
          "value": "https://t.me/K_XIII_P"
